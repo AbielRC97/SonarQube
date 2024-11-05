@@ -1,11 +1,11 @@
-# Usa la imagen oficial de SonarQube
-FROM sonarqube:latest
+# Usa una versión específica de SonarQube para evitar cambios inesperados
+FROM sonarqube:9.9-community
 
-# Copiar el archivo sonar.properties si tienes configuraciones específicas
+# Copia el archivo sonar.properties si tienes configuraciones específicas
 COPY sonar.properties /opt/sonarqube/conf/sonar.properties
 
-# Exponer el puerto 9000
+# Exponer el puerto 9000 (puerto predeterminado de SonarQube)
 EXPOSE 9000
 
-# Comando para iniciar SonarQube con la ruta correcta
-CMD ["/opt/sonarqube/bin/linux-x86-64/sonar.sh", "console"]
+# Iniciar SonarQube usando la ruta correcta del script
+CMD ["bin/sonar.sh", "console"]
