@@ -7,5 +7,6 @@ COPY sonar.properties /opt/sonarqube/conf/sonar.properties
 # Exponer el puerto 9000 (puerto predeterminado de SonarQube)
 EXPOSE 9000
 
-# Iniciar SonarQube usando la ruta correcta del script
-CMD ["bin/sonar.sh", "console"]
+# Usa el entrypoint predeterminado de SonarQube
+ENTRYPOINT ["/opt/sonarqube/bin/docker/entrypoint.sh"]
+CMD ["console"]
