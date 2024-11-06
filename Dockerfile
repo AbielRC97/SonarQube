@@ -1,11 +1,16 @@
-# Usa una versión específica de SonarQube para asegurar una estructura estable
-FROM sonarqube:9.9-community
+# Usa la imagen oficial de SonarQube como base
+FROM sonarqube:community
 
-# Copia el archivo sonar.properties si tienes configuraciones específicas
-COPY sonar.properties /opt/sonarqube/conf/sonar.properties
+# Usa root temporalmente para crear los directorios y ajustar permisos
+USER root
+RUN mkdir -p /opt/sonarqube/data \
+    && mkdir -p /opt/sonarqube/logs \
+    && chown -R 1000:1000 /opt/sonarqube
 
-# Exponer el puerto 9000 (puerto predeterminado de SonarQube)
+# Cambia al usuario SonarQube para ejecutar el servicio
+USER 1000
+
+# Expone el puerto 9000
 EXPOSE 9000
 
-# Inicia SonarQube sin duplicar la ruta
-CMD ["/opt/sonarqube/bin/sonar.sh", "console"]
+# No necesitas especificar ENTRYPOINT porque SonarQube ya tiene uno
